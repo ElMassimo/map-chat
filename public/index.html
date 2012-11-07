@@ -3,25 +3,35 @@
 <head>
 	<meta charset="UTF-8">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>World chat!</title>
+	<title>Xmartlabs chat</title>
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="/css/xmartpushapp.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css" media="all" />
 </head>
 <body>	
-	<div class="navbar">
-		<div class="navbar-inner">
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-xmartlabs navbar-inner">
 			<div class="container">
-				<a href="#" class="brand">World Chat</a>
-				<ul class="nav">
-					<li class="active"><a href="/">Chat Room</a></li>
-					<li><a href="/users.html">Connected Users</a></li>
-				</ul>
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+       	</a>
+				<a href="http://xmartlabs.com" class="brand">
+						<img class="xmart-logo" src="/img/xmartlabs.png" alt="Xmartlabs Logo"/>chat
+				</a>
 				<p id="userGreeting" class="navbar-text pull-right"></p>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="active"><a href="/">Chat Room</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row-fluid">	
 			<div id="channelForm" class="form-inline">
 				<label for="nameBox">Please write your name </label>
@@ -32,7 +42,10 @@
 		<div class="row-fluid">				
 			<div id="map_canvas" class="span8" style="min-height: 500px;"></div>
 			<div id="chatContainer" class="chat-container span4"></div>			
-		</div>
+		</div>		
+		<footer>
+			<small class="pull-right">Connected users: <span id="usersCount">0</span></small>
+		</footer>
 	</div>
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -40,32 +53,33 @@
 <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVPtUwnFXt0-wEylg3qIQUaBoS2RAv5CE&sensor=true">
 </script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/xmartutil.js"></script>
 <script type="text/javascript" src="/js/xmartlocator.js"></script>
 <script type="text/javascript" src="/js/xmartchat.js"></script>
 <script type="text/javascript" src="/js/autogrow.js"></script>
 <script>
-	var socket = io.connect(window.location.origin);
-
-	function getUrlParameter(name){
-  	if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search)) {
-      return decodeURIComponent(name[1]);
-    }
-	}
+	var socket = io.connect(window.location.hostname);
 
 	function loadWorldChat(username){		
 		$('#channelForm').remove();
 		$("#userGreeting").html("Hello "+username+"!");
 
-		xmartlabschat.initialize(socket, username, "chatContainer");    
+		xmartlabsutil
+		xmartlabschat.initialize(username, socket, "chatContainer");    
 		xmartlabslocator.initialize(socket,'map_canvas');
+	}
 
-		socket.emit('register', { username : username });
+	function getUrlParameter(param){
+  	if(param=(new RegExp('[?&]'+encodeURIComponent(param)+'=([^&]*)')).exec(location.search)) {
+      return decodeURIComponent(param[1]);
+    }
 	}
 
 	var username = getUrlParameter("username");
 	if(username) {
 		loadWorldChat(username);
-	}else{		
+	} else {		
 		$('#createChannel').on('click',function(){
 			username = $("#nameBox").val();
 			loadWorldChat(username);
