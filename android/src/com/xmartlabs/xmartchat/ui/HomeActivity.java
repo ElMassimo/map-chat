@@ -14,11 +14,11 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import com.xmartlabs.xmartchat.R;
 import com.xmartlabs.xmartchat.io.ConnectionHelper;
 import com.xmartlabs.xmartchat.utils.HelpUtils;
 import com.xmartlabs.xmartchat.utils.LocationUtils;
 import com.xmartlabs.xmartchat.utils.LogUtils;
-import com.xmartlabs.xmartchat.R;
 
 public class HomeActivity extends BaseActivity implements
         ActionBar.TabListener,
@@ -64,6 +64,7 @@ public class HomeActivity extends BaseActivity implements
         LocationUtils.setupLocationManager(this);
 
         getActionBar().setHomeButtonEnabled(false);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
@@ -153,7 +154,6 @@ public class HomeActivity extends BaseActivity implements
                 return true;
 
             case R.id.menu_sign_out:
-                ConnectionHelper.disconnect();
                 finish();
                 return true;
         }

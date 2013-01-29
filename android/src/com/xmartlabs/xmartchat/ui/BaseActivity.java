@@ -17,15 +17,17 @@ public class BaseActivity extends FragmentActivity {
             loginFlowIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             loginFlowIntent.putExtra(LoginActivity.EXTRA_FINISH_INTENT, getIntent());
             startActivity(loginFlowIntent);
+            finish();
         }
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpTo(this, new Intent(this, HomeActivity.class));
-            return true;
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpTo(this, new Intent(this, HomeActivity.class));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -187,12 +187,15 @@ public class SocketIOClient {
     }
 
     private void cleanup() {
-        mClient.disconnect();
-        mClient = null;
-
-        mSendLooper.quit();
-        mSendLooper = null;
-        mSendHandler = null;
+        if(mClient != null) {
+            mClient.disconnect();
+            mClient = null;
+        }
+        if(mSendLooper != null) {
+            mSendLooper.quit();
+            mSendLooper = null;
+            mSendHandler = null;
+        }
     }
 
     public void connect() {

@@ -56,7 +56,10 @@ public class ConnectionHelper {
 
     public static boolean disconnect() {
         try {
-            socketIO.disconnect();
+            if(socketIO != null) {
+                socketIO.disconnect();
+                socketIO = null;
+            }
             return true;
         } catch (IOException ex) {
             LOGE(TAG, "Error during disconnection", ex);

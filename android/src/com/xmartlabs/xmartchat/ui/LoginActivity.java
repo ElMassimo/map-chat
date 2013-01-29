@@ -33,6 +33,8 @@ public class LoginActivity extends Activity {
         if (getIntent().hasExtra(EXTRA_FINISH_INTENT)) {
             finishIntent = getIntent().getParcelableExtra(EXTRA_FINISH_INTENT);
         }
+
+        getActionBar().hide();
     }
 
     public void onLoginButtonClick(View button) {
