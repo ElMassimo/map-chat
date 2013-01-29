@@ -36,6 +36,7 @@ var connectedUsers = {};
 var webSocket = io.listen(httpServer);
 
 if(process.env.NODE_ENV == 'production') {
+  // Heroku recommended configuration for cedar stack
   webSocket.configure(function () { 
     webSocket.set("transports", ["xhr-polling"]); 
     webSocket.set("polling duration", 10); 
